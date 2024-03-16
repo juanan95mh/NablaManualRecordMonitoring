@@ -68,9 +68,9 @@ local rec_tracks_table = {}
 local selected = false
 local idxStart
 local idxEnd
-local idxEndMon
-local idxStartMonMIDI
-local idxStartMonAUDIO
+--JAM--local idxEndMon
+--JAM--local idxStartMonMIDI
+--JAM--local idxStartMonAUDIO
 local newsiEnd, sredItemEnd
 
 SafeMode = SafeMode
@@ -308,18 +308,18 @@ local function SetActionTracksConfig()
         reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMODE', 0 )
       end
       reaper.SetMediaTrackInfo_Value( v.code_track, 'B_FREEMODE', 0 )
-      reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMONITEMS', 1 )
-      reaper.SetMediaTrackInfo_Value( v.code_track , 'I_RECMON', 0 )
+      --JAM--reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMONITEMS', 1 )
+      --JAM--reaper.SetMediaTrackInfo_Value( v.code_track , 'I_RECMON', 0 )
       reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECARM', 0 )
     elseif v.item_action == 'record mute' then
       if v.track_rec_mode ~= 0 then reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMODE', 0 ) end
       reaper.SetMediaTrackInfo_Value( v.code_track, 'B_FREEMODE', 0 )
-      reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMONITEMS', 1 )
+      --JAM--reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMONITEMS', 1 )
       reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECARM', 0 )
     end
     if v.item_action == "monitor" then
       reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMODE', 2 )
-      reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 0 )
+      --JAM--reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 0 )
       reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECARM', 1 )
     end
   end
@@ -569,7 +569,7 @@ local function AtExitActions()
   for i = 1, #rec_tracks_table do
     local v = rec_tracks_table[i]
     if v.track_rec_mode ~= 2 then
-      reaper.SetMediaTrackInfo_Value( v.code_track , 'I_RECMON', 1 )
+      --JAM--reaper.SetMediaTrackInfo_Value( v.code_track , 'I_RECMON', 1 )
       reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMODE', v.track_rec_mode )
       reaper.SetMediaTrackInfo_Value( v.code_track,  'I_RECARM', 0 )
     end
@@ -713,7 +713,7 @@ local function ArmTracksByGroupTimes( str_item_position )
   for i = 1, #_G[ str_item_position ] do
     reaper.Undo_BeginBlock()
     local v = items_table[ _G[str_item_position][i].item_index ]
-    reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 0 )
+    --JAM--reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 0 )
     reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECARM', 1 )
     if SafeMode == 'true' then SetReaDelayTime( v.code_track, v.item_length) end
     reaper.Undo_EndBlock("Recording: "..v.take_name, -1)
@@ -743,10 +743,10 @@ local function ArmTrackMonitorGroupMIDI(str_item_position)
     if v.track_rec_input >= 4096 then
       reaper.Undo_BeginBlock()
       if v.item_action == "record" or v.item_action == "monitor" then
-        reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 1 )
+        --JAM--reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 1 )
       elseif v.item_action == "record mute" then
         reaper.SetMediaTrackInfo_Value( v.code_track, 'B_MUTE', 1 )
-        reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 1 )
+        --JAM--reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 1 )
       end
       reaper.Undo_EndBlock("On Monitor: "..v.take_name, -1)
     end
@@ -759,10 +759,10 @@ local function ArmTrackMonitorGroupAudio(str_item_position)
     if v.track_rec_input < 4096 then
       reaper.Undo_BeginBlock()
       if v.item_action == "record" or v.item_action == "monitor" then
-        reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 1 )
+        --JAM--reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 1 )
       elseif v.item_action == "record mute" then
         reaper.SetMediaTrackInfo_Value( v.code_track, 'B_MUTE', 1 )
-        reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 1 )
+        --JAM--reaper.SetMediaTrackInfo_Value( v.code_track, 'I_RECMON', 1 )
       end
       reaper.Undo_EndBlock("On Monitor: "..v.take_name, -1)
     end
@@ -967,8 +967,8 @@ local function SetStartIdxs()
         local item_position  = item_start_position_table[i].item_position
         if item_position - 0.1 > reaper.GetCursorPosition() then
             idxStart         = i
-            idxStartMonMIDI  = i
-            idxStartMonAUDIO = i
+            --JAM--idxStartMonMIDI  = i
+            --JAM--idxStartMonAUDIO = i
             break
         end
     end
@@ -979,7 +979,7 @@ local function SetEndIdxs()
         local item_end_position  = item_end_position_table[i].item_end_position
         if item_end_position - 0.1 > reaper.GetCursorPosition() then
             idxEnd    = i
-            idxEndMon = i
+            --JAM--idxEndMon = i
             break
         end
     end
@@ -1001,9 +1001,9 @@ local function Main()
     reaper.CSurf_OnRecord()
     -- Start Defer Functions --
     ActivateRecording()
-    ActivateMonitorMIDI()
-    ActivateMonitorAUDIO()
-    DeactivateMonitor()
+    --JAM--ActivateMonitorMIDI()
+    --JAM--ActivateMonitorAUDIO()
+    --JAM--DeactivateMonitor()
     DeactivateRecording()
     WaitForEnd()
 end

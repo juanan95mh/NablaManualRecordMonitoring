@@ -380,8 +380,8 @@ function prepareRecordTrack(v)
 		setRecMode(v.trackCode, 0)
 	end       
 	reaper.SetMediaTrackInfo_Value( v.trackCode, 'B_FREEMODE', 0 )
-	reaper.SetMediaTrackInfo_Value( v.trackCode, 'I_RECMONITEMS', 1 )
-	toggleMonitor(v.trackCode, 0)
+	--JAM--reaper.SetMediaTrackInfo_Value( v.trackCode, 'I_RECMONITEMS', 1 )
+	--JAM--toggleMonitor(v.trackCode, 0)
 	toggleArm(v.trackCode, 0)
 end
 
@@ -390,13 +390,13 @@ function prepareRecordMuteTrack(v)
 		setRecMode(v.trackCode, 0)
 	end       
 	reaper.SetMediaTrackInfo_Value( v.trackCode, 'B_FREEMODE', 0 )
-	reaper.SetMediaTrackInfo_Value( v.trackCode, 'I_RECMONITEMS', 1 )
+	--JAM--reaper.SetMediaTrackInfo_Value( v.trackCode, 'I_RECMONITEMS', 1 )
 	toggleArm(v.trackCode, 0)
 end
 
 function prepareMonitorTrack(v)
 	setRecMode(v.trackCode, 2)
-	toggleMonitor(v.trackCode, 0)
+	--JAM--toggleMonitor(v.trackCode, 0)
 	toggleArm(v.trackCode, 1)
 end
 
@@ -620,7 +620,7 @@ function restoreRecordTracks()
 	for i = 1, #recTracks do
 		local v = recTracks[i]
 		if v.trackMode ~= 2 then
-			toggleMonitor(v.trackCode, 1)
+			--JAM--toggleMonitor(v.trackCode, 1)
 			setRecMode(v.trackCode, v.trackMode)
 			toggleArm(v.trackCode, 0)
 		end
@@ -738,7 +738,7 @@ function ArmTracksByGroupTimes( itemStartStr )
 	for i = 1, #_G[ itemStartStr ] do
 		reaper.Undo_BeginBlock()
 		local v = items[ _G[itemStartStr][i].idx ]
-		reaper.SetMediaTrackInfo_Value( v.trackCode, 'I_RECMON', 0 )
+		--JAM--reaper.SetMediaTrackInfo_Value( v.trackCode, 'I_RECMON', 0 )
 		reaper.SetMediaTrackInfo_Value( v.trackCode, 'I_RECARM', 1 )
 		if safeMode == 'true' then SetReaDelayTime( v.trackCode, v.itemLength, v.trackInput) end
 		reaper.Undo_EndBlock("Recording: "..v.takeName, -1)
@@ -969,8 +969,8 @@ function setIdxSatart()
 		local itemStart  = startTimes[i].itemStart
 		if itemStart - 0.1 > reaper.GetCursorPosition() then
 			idxStart         = i
-			idxStartMonMIDI  = i
-			idxStartMonAUDIO = i
+			--JAM--idxStartMonMIDI  = i
+			--JAM--idxStartMonAUDIO = i
 			break
 		end
 	end
@@ -981,7 +981,7 @@ function setIdxEnd()
 		local itemEnd  = endTimes[i].itemEnd
 		if itemEnd - 0.1 > reaper.GetCursorPosition() then
 			idxEnd    = i
-			idxEndMon = i
+			--JAM--idxEndMon = i
 			break
 		end
 	end

@@ -74,7 +74,7 @@ local tSelectedItems = {}
 local flags          = {}
 local tReaDelay      = {}
 local tReaDelay_Off  = {}
-local tMonitor       = {}
+--JAM--local tMonitor       = {}
 ------------------------------------------------------------------
 local function errorHandler(errObject)
   reaper.OnStopButton()
@@ -225,7 +225,7 @@ function start_rec_on_next_measure(measure)
     reaper.SelectAllMediaItems(proj, false)
     for i = 1 , #tToArm do
       -- reaper.ShowConsoleMsg("---> Start Record\n")
-      reaper.SetMediaTrackInfo_Value( tToArm[i].cTrack, 'I_RECMON', 0 )
+      --JAM--reaper.SetMediaTrackInfo_Value( tToArm[i].cTrack, 'I_RECMON', 0 )
       reaper.SetMediaTrackInfo_Value( tToArm[i].cTrack, 'I_RECARM', 1 )
       tReaDelay[i] = {cTrack = tToArm[i].cTrack, measure = storedMeasure}
     end
@@ -259,7 +259,7 @@ function stop_rec_on_next_measure(measure)
       reaper.TrackFX_SetParam( tToUnarm[i].cTrack, reaper.TrackFX_AddByName( tToUnarm[i].cTrack, 'Nabla ReaDelay', false, 0 ), 13, 1 ) -- OnReaDelay
       -- reaper.ShowConsoleMsg("---> Stop Rec\n")
       reaper.SetMediaTrackInfo_Value( tToUnarm[i].cTrack, 'I_RECARM', 0 )
-      reaper.SetMediaTrackInfo_Value( tToUnarm[i].cTrack, 'I_RECMON', 0 )
+      --JAM--reaper.SetMediaTrackInfo_Value( tToUnarm[i].cTrack, 'I_RECMON', 0 )
     end
     for i=1, #tToUnarm do tToUnarm[i] = nil end
     reaper.Main_OnCommand(40670, 0)
@@ -304,7 +304,7 @@ function StartStopRecording()
     if trRecMode ~= 2 then
       if armState == 0 then
         tToArm[inc+1] = {cTrack = cTrack }
-        tMonitor[inc+1] = {cTrack = cTrack }
+        --JAM--tMonitor[inc+1] = {cTrack = cTrack }
         inc = inc + 1
       end
     end
@@ -312,7 +312,7 @@ function StartStopRecording()
 
   if #tToArm ~= 0 then 
     start_rec_on_next_measure(measure)
-    start_mon_on_next_measure(measure)
+    --JAM--start_mon_on_next_measure(measure)
   end
 end
 ------------------------------------------------------------------

@@ -55,7 +55,7 @@ local function CreateTableRecordingTracks()
       local _, name       = reaper.GetTrackName(track)
       local name          = match(name, '%[.-%]%s?(.*)') or name
       local trRecInput    = reaper.GetMediaTrackInfo_Value(track, 'I_RECINPUT')
-      local trMonItems    = reaper.GetMediaTrackInfo_Value(track, 'I_RECMONITEMS')
+      --JAM--local trMonItems    = reaper.GetMediaTrackInfo_Value(track, 'I_RECMONITEMS')
       local trFreeMode    = reaper.GetMediaTrackInfo_Value(track, 'B_FREEMODE')
       recTracks[#recTracks+1] = {
         track 		 = track, 
@@ -132,7 +132,7 @@ local function UnarmTracks()
     local trRecMode = reaper.GetMediaTrackInfo_Value( cTrack, 'I_RECMODE' )
     if trRecMode ~= 2 then
       reaper.SetMediaTrackInfo_Value( cTrack, 'I_RECARM', 0 )
-      reaper.SetMediaTrackInfo_Value( cTrack, 'I_RECMON', 1 )
+      --JAM--reaper.SetMediaTrackInfo_Value( cTrack, 'I_RECMON', 1 )
     end
   end
 end
